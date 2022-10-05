@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+
+<% cache(@user) do %>
+  <p>
+    <strong>Email:</strong>
+    <%= @user.email %>
+  </p>
+
+  <p>
+    <strong>Name:</strong>
+    <%= @user.name %>
+  </p>
+  <%ActiveRecord::Base.connected_to(role: :reading, shard: request.subdomain.to_sym) do%>
+    <p>
+      <strong>Posts:</strong>
+      <% @posts.sort.each do |post| %>
+        <% cache(post) do %>
+          <li>post_id:<%= post.id %></li>
+          Title: <%= post.title %><br>
+          Body: <%= post.body %>
+          <ul>
+          Post comments:
+            <% post.comments.sort.each do |com| %>
+              <% cache(com) do %>
+                <ul>- <%= com.body %>|||com_id:<%= com.id %>;</ul>
+                <% end %>
+            <% end %>
+          </ul>
+        <% end %>
+      <%end%>
+    </p>
+  <%end%>
+
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+  <%= link_to 'Back', users_path %>
+<%end%>

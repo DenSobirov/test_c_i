@@ -1,0 +1,30 @@
+<% cache(@post) do %>
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <strong>Title:</strong>
+    <%= @post.title %>
+  </p>
+
+  <p>
+    <strong>Body:</strong>
+    <%= @post.body %>
+  </p>
+
+  <b>Comments</b>
+  <br>
+  <%- @post.comments.each do |comment|%>
+    <%if comment.persisted?%>
+      <%cache(comment) do%>
+        <li><%= comment.body%></li>
+      <%end%>
+    <%end%>
+  <% end %>
+  <br>
+
+  Left comment:
+  <%= render "comments/form", comment: @comment%>
+
+  <%= link_to 'Edit', edit_post_path(@post) %> |
+  <%= link_to 'Back', posts_path %>
+<% end %>
