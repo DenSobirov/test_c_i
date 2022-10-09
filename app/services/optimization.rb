@@ -185,7 +185,7 @@ module Optimization
 
   # Use gem 'bullet'
   # Use 'benchmark'
-  # Use db indecies
+  # Use db indices
 
   # ======================================================================
 end
