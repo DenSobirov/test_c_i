@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_08_161632) do
+ActiveRecord::Schema.define(version: 2022_10_09_153516) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "comments", force: :cascade do |t|
@@ -20,6 +21,12 @@ ActiveRecord::Schema.define(version: 2022_09_08_161632) do
     t.bigint "post_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "longitude"
+    t.float "latitude"
+    t.float "longitude_with_index"
+    t.float "latitude_with_index"
+    t.text "body_with_index"
+    t.index ["body_with_index"], name: "index_comments_on_body_with_index", opclass: :gin_trgm_ops, using: :gin
     t.index ["post_id"], name: "index_comments_on_post_id"
   end
 

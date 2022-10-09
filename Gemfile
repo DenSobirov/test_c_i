@@ -46,6 +46,8 @@ group :development do
   gem 'spring'
   # fake texts for testing
   gem 'faker'
+  gem 'pry'
+  # gem 'awesome_print'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
